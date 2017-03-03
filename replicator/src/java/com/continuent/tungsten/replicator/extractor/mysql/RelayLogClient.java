@@ -73,7 +73,7 @@ public class RelayLogClient
     private long                      offset                      = 4;
     private String                    binlogDir                   = ".";
     private boolean                   autoClean                   = true;
-    private int                       serverId                    = 1;
+    private long                      serverId                    = 1;
     private long                      readTimeout                 = 60;
     private boolean                   deterministicIo             = false;
     private LinkedBlockingQueue<File> logQueue                    = null;
@@ -177,7 +177,7 @@ public class RelayLogClient
         this.autoClean = autoClean;
     }
 
-    public void setServerId(int serverId)
+    public void setServerId(long serverId)
     {
         this.serverId = serverId;
     }
@@ -570,7 +570,7 @@ public class RelayLogClient
         packet.putByte((byte) MySQLConstants.COM_BINLOG_DUMP);
         packet.putInt32((int) offset);
         packet.putInt16(0);
-        packet.putInt32(serverId);
+        packet.putLong(serverId);
         if (binlog != null)
             packet.putString(binlog);
         packet.write(out);
@@ -591,7 +591,7 @@ public class RelayLogClient
         // Read the header. Note we can only handle V4 headers (5.0+).
         long timestamp = packet.getUnsignedInt32();
         int typeCode = packet.getUnsignedByte();
-        long serverId = packet.getUnsignedInt32();
+        long serverId = packet.getLong();
         long eventLength = packet.getUnsignedInt32();
         long nextPosition = packet.getUnsignedInt32();
         int flags = packet.getUnsignedShort();

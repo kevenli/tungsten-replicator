@@ -100,7 +100,7 @@ public class MySQLExtractor implements RawExtractor
     private boolean                         deterministicIo           = true;
     private int                             relayLogRetention         = 3;
     private String                          relayLogDir               = null;
-    private int                             serverId                  = 1;
+    private long                            serverId                  = 1;
     private int                             binlogReadTimeout         = 120;
 
     private static long                     binlogPositionMaxLength   = 10;
@@ -269,12 +269,12 @@ public class MySQLExtractor implements RawExtractor
         this.relayLogDir = relayLogDir;
     }
 
-    public int getServerId()
+    public long getServerId()
     {
         return serverId;
     }
 
-    public void setServerId(int serverId)
+    public void setServerId(long serverId)
     {
         this.serverId = serverId;
     }
